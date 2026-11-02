@@ -1,0 +1,22 @@
+--- baseline/src/main/webapp/WEB-INF/views/error/500.jsp
++++ final/src/main/webapp/WEB-INF/views/error/500.jsp
+@@ -2,15 +2,16 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
+-    <meta charset="UTF-8">
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
++    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>500 | RedWeb</title>
++    <title>500 | REDWEB</title>
+     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/common.css">
+ </head>
+ <body class="simple-page">
+ <main class="compact-card">
+     <h1>일시적인 오류가 발생했습니다</h1>
+-    <p>잠시 후 다시 시도하거나 메인 화면으로 이동해주세요.</p>
++    <p>잠시 후 다시 시도하거나 메인 화면으로 이동해 주세요.</p>
+     <a class="btn btn-primary" href="${pageContext.request.contextPath}/home">메인으로 이동</a>
+ </main>
+ </body>

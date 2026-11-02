@@ -1,0 +1,4 @@
+<!-- Merge into server.xml; do not create a second public connector. -->
+<Connector address="127.0.0.1" port="8080" protocol="HTTP/1.1"
+           allowTrace="false" maxThreads="100" maxConnections="200" acceptCount="50"
+           connectionTimeout="20000" maxPostSize="115343360" />

@@ -1,0 +1,31 @@
+[Unit]
+Description=Apache Tomcat 11 for REDWEB limited test
+After=network-online.target oracle-free-ready.service
+Wants=network-online.target
+Requires=oracle-free-ready.service
+
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+Environment="JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64"
+Environment="CATALINA_HOME=/opt/tomcat"
+Environment="CATALINA_BASE=/opt/tomcat"
+Environment="CATALINA_PID=/run/tomcat/tomcat.pid"
+EnvironmentFile=/etc/redweb/redweb-runtime.env
+RuntimeDirectory=tomcat
+RuntimeDirectoryMode=0750
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tomcat/logs /opt/tomcat/temp /opt/tomcat/work /opt/tomcat/webapps /var/lib/redweb/uploads
+
+[Install]
+WantedBy=multi-user.target

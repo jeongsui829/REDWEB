@@ -1,0 +1,79 @@
+.auth-card {
+    width: min(560px, 100%);
+    padding: 32px;
+    border-color: var(--border-red);
+}
+
+.auth-card.wide {
+    width: min(840px, 100%);
+}
+
+.auth-copy {
+    margin-bottom: 22px;
+}
+
+.auth-copy h1 {
+    margin: 0 0 12px;
+    font-size: clamp(32px, 5vw, 48px);
+}
+
+.auth-copy p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.75;
+}
+
+.auth-card::before {
+    content: "REDWEB 보안 접속";
+    display: block;
+    margin-bottom: 18px;
+    padding: 9px 10px;
+    border-radius: var(--radius-sm);
+    color: #fecaca;
+    background: rgba(239, 43, 45, 0.08);
+    border: 1px solid var(--border-red);
+    font-size: 12px;
+    font-weight: 950;
+    letter-spacing: 0;
+}
+
+.auth-links,
+.helper-links {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.auth-links a,
+.helper-links a {
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.auth-links a:hover,
+.helper-links a:hover {
+    color: var(--red-hot);
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-form .full,
+.grid-form button {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+    .auth-card,
+    .auth-card.wide {
+        padding: 24px;
+    }
+
+    .grid-form {
+        grid-template-columns: 1fr;
+    }
+}

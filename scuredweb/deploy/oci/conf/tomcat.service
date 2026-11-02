@@ -1,0 +1,36 @@
+[Unit]
+Description=Apache Tomcat 11 for REDWEB OCI production
+After=network-online.target oracle-free-ready.service
+Wants=network-online.target
+Requires=oracle-free-ready.service
+RequiresMountsFor=/var/lib/redweb/uploads /srv/redweb/scratch
+
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+Environment="JAVA_HOME=/usr/lib/jvm/temurin-25-jdk-amd64"
+Environment="CATALINA_HOME=/opt/tomcat"
+Environment="CATALINA_BASE=/opt/tomcat"
+Environment="CATALINA_PID=/run/tomcat/tomcat.pid"
+EnvironmentFile=/etc/redweb/redweb-runtime.env
+RuntimeDirectory=tomcat
+RuntimeDirectoryMode=0750
+ExecStartPre=/usr/bin/mountpoint -q /var/lib/redweb/uploads
+ExecStartPre=/usr/bin/mountpoint -q /srv/redweb/scratch
+ExecStartPre=/usr/bin/test -r /opt/tomcat/conf/Catalina/localhost/scuredweb.xml
+ExecStartPre=/usr/local/sbin/check-redweb-runtime.sh
+ExecStart=/opt/tomcat/bin/startup.sh
+ExecStop=/opt/tomcat/bin/shutdown.sh
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tomcat/logs /opt/tomcat/temp /opt/tomcat/work /opt/tomcat/webapps /var/lib/redweb/uploads /srv/redweb/scratch/tomcat
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,65 @@
+--- baseline/src/main/webapp/WEB-INF/views/auth/login.jsp
++++ final/src/main/webapp/WEB-INF/views/auth/login.jsp
+@@ -12,45 +12,42 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>로그인 | RedWeb</title>
++    <title>로그인 | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/layout.css">
++    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/components.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/pages/auth.css">
+ </head>
+ <body>
+ <jsp:include page="/WEB-INF/views/common/header.jsp" />
+ <main class="auth-shell container">
+-    <section class="auth-panel brand-panel">
+-        <span class="eyebrow">계정 로그인</span>
+-        <h1>RedWeb 계정으로 로그인하고 게시글 탐색과 개인 활동 관리를 이어가세요.</h1>
+-        <p>마이페이지, 최근 로그인 기록, 알림 목록, 내가 작성한 글과 댓글까지 한 곳에서 확인할 수 있습니다.</p>
+-    </section>
+-    <section class="auth-panel form-panel">
+-        <h2>로그인</h2>
+-        <% if (errorMessage != null) { %>
+-            <div class="alert error"><%= errorMessage %></div>
+-        <% } %>
+-        <% if (flashMessage != null) { %>
+-            <div class="alert success"><%= flashMessage %></div>
+-        <% } %>
+-        <form method="post" action="<%= request.getContextPath() %>/login" class="stack-form">
++    <section class="auth-card">
++        <div class="auth-copy">
++            <span class="eyebrow">다시 오신 것을 환영합니다</span>
++            <h1>REDWEB 로그인</h1>
++            <p>보안 포럼, CTF 기록, 프로젝트 토론에 참여하려면 로그인하세요.</p>
++        </div>
++        <% if (errorMessage != null) { %><div class="alert error"><%= errorMessage %></div><% } %>
++        <% if (flashMessage != null) { %><div class="alert success"><%= flashMessage %></div><% } %>
++        <form class="stack-form" method="post" action="<%= request.getContextPath() %>/login">
+             <label>아이디
+-                <input type="text" name="loginId" autocomplete="username" placeholder="아이디를 입력하세요" required>
++                <input type="text" name="loginId" autocomplete="username" required>
+             </label>
+             <label>비밀번호
+-                <input type="password" name="password" autocomplete="current-password" placeholder="비밀번호를 입력하세요" required>
++                <input type="password" name="password" autocomplete="current-password" required>
+             </label>
+-            <button type="submit" class="btn btn-primary full">로그인</button>
++            <button class="btn btn-primary full" type="submit">로그인</button>
+         </form>
+-        <div class="helper-links">
++        <div class="auth-links">
+             <a href="<%= request.getContextPath() %>/register">회원가입</a>
+             <a href="<%= request.getContextPath() %>/find-id">아이디 찾기</a>
+             <a href="<%= request.getContextPath() %>/find-password">비밀번호 찾기</a>
+         </div>
+     </section>
+ </main>
+-<script src="<%= request.getContextPath() %>/assets/js/common.js"></script>
++<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+ </body>
+ </html>

@@ -1,0 +1,7 @@
+# Install as /etc/systemd/system/tomcat.service.d/persistent-volumes.conf
+# Mount dedicated volumes at these exact paths using /etc/fstab UUIDs first.
+[Unit]
+RequiresMountsFor=/var/lib/redweb/uploads /srv/redweb/oracle
+[Service]
+ExecStartPre=/usr/bin/mountpoint -q /var/lib/redweb/uploads
+ExecStartPre=/usr/bin/mountpoint -q /srv/redweb/oracle

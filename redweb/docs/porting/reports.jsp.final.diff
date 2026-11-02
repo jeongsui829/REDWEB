@@ -1,0 +1,98 @@
+--- baseline/src/main/webapp/WEB-INF/views/admin/reports.jsp
++++ final/src/main/webapp/WEB-INF/views/admin/reports.jsp
+@@ -7,13 +7,14 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>신고 관리 | RedWeb</title>
++    <title>신고 관리 | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/admin/admin.css">
+ </head>
+-<body class="admin-body admin-page-reports">
++<body class="admin-body">
+ <jsp:include page="/WEB-INF/views/common/admin-header.jsp" />
+ <div class="admin-layout">
+     <jsp:include page="/WEB-INF/views/common/admin-sidebar.jsp" />
+@@ -22,24 +23,15 @@
+             <div class="section-head">
+                 <div>
+                     <h2>신고 관리</h2>
+-                    <p>신고 처리 시 누적 횟수에 따라 자동으로 시간 정지가 적용됩니다.</p>
++                    <p>접수된 신고를 확인하고 제재 처리 또는 조치 없음으로 마감합니다.</p>
+                 </div>
+             </div>
+-            <% if (flashMessage != null && !flashMessage.isBlank()) { %>
+-                <div class="admin-alert"><%= flashMessage %></div>
+-            <% } %>
++            <% if (flashMessage != null && !flashMessage.isBlank()) { %><div class="admin-alert"><%= flashMessage %></div><% } %>
+             <div class="admin-table-wrap">
+                 <table class="admin-table">
+                     <thead>
+                     <tr>
+-                        <th>번호</th>
+-                        <th>신고자</th>
+-                        <th>대상</th>
+-                        <th>사유</th>
+-                        <th>상태</th>
+-                        <th>제재</th>
+-                        <th>접수 시각</th>
+-                        <th>처리</th>
++                        <th>번호</th><th>신고자</th><th>대상</th><th>사유</th><th>상태</th><th>제재</th><th>접수 시각</th><th>처리</th>
+                     </tr>
+                     </thead>
+                     <tbody>
+@@ -53,37 +45,29 @@
+                             <td><%= report.getReporterNickname() %></td>
+                             <td><%= report.getTargetNickname() %></td>
+                             <td><%= report.getReason() %></td>
+-                            <td>
+-                                <span class="status-badge <%= resolved ? "is-active" : (pending ? "is-suspended" : "") %>">
+-                                    <%= resolved ? "처리 완료" : (pending ? "대기 중" : "조치 없음") %>
+-                                </span>
+-                            </td>
++                            <td><span class="status-badge <%= resolved ? "is-active" : (pending ? "is-suspended" : "") %>"><%= resolved ? "처리 완료" : (pending ? "대기 중" : "조치 없음") %></span></td>
+                             <td><%= report.getPenaltySummary() != null ? report.getPenaltySummary() : "-" %></td>
+                             <td><%= report.getCreatedAt() %></td>
+                             <td>
+                                 <% if (pending) { %>
+                                     <div class="admin-inline-actions">
+-                                        <form method="post" action="<%= request.getContextPath() %>/admin/reports/process">
++                                        <form method="post" action="<%= request.getContextPath() %>/admin/reports/process" data-confirm="이 신고를 처리하고 대상 계정을 정지하시겠습니까?">
+                                             <input type="hidden" name="reportId" value="<%= report.getReportId() %>">
+-                                            <button type="submit" class="btn btn-secondary">신고 처리</button>
++                                            <button type="submit" class="btn btn-secondary">처리</button>
+                                         </form>
+-                                        <form method="post" action="<%= request.getContextPath() %>/admin/reports/dismiss">
++                                        <form method="post" action="<%= request.getContextPath() %>/admin/reports/dismiss" data-confirm="이 신고를 조치 없음으로 정리하시겠습니까?">
+                                             <input type="hidden" name="reportId" value="<%= report.getReportId() %>">
+                                             <button type="submit" class="btn btn-light">조치 없음</button>
+                                         </form>
+                                     </div>
+                                 <% } else { %>
+-                                    <span class="table-note">
+-                                        <%= report.getProcessedByNickname() != null ? report.getProcessedByNickname() : "-" %> 처리
+-                                    </span>
++                                    <span class="table-note"><%= report.getProcessedByNickname() != null ? report.getProcessedByNickname() : "-" %> 처리</span>
+                                 <% } %>
+                             </td>
+                         </tr>
+                     <%  }
+                        } else { %>
+-                        <tr>
+-                            <td colspan="8">접수된 신고가 없습니다.</td>
+-                        </tr>
++                        <tr><td colspan="8">접수된 신고가 없습니다.</td></tr>
+                     <% } %>
+                     </tbody>
+                 </table>
+@@ -91,5 +75,6 @@
+         </section>
+     </main>
+ </div>
++<script src="<%= request.getContextPath() %>/assets/js/common.js"></script>
+ </body>
+ </html>

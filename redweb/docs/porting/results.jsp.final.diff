@@ -1,0 +1,50 @@
+--- baseline/src/main/webapp/WEB-INF/views/search/results.jsp
++++ final/src/main/webapp/WEB-INF/views/search/results.jsp
+@@ -8,9 +8,10 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>검색 결과 | RedWeb</title>
++    <title>검색 결과 | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/layout.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/components.css">
+@@ -21,21 +22,18 @@
+ <main class="page-shell container board-shell">
+     <section class="board-hero section-card">
+         <div class="board-hero-copy">
+-            <span class="eyebrow">통합 검색</span>
++            <span class="eyebrow">검색</span>
+             <h1>검색 결과 <%= resultCount %>건</h1>
+-            <p><strong><%= keyword == null || keyword.isBlank() ? "검색어 없음" : keyword %></strong> 에 대한 결과입니다.</p>
++            <p><strong><%= keyword == null || keyword.isBlank() ? "검색어 없음" : keyword %></strong>에 대한 결과입니다.</p>
+         </div>
+     </section>
+-
+     <section class="section-card board-list-card">
+         <div class="list-table">
+             <% if (results != null && !results.isEmpty()) {
+                 for (PostDTO post : results) { %>
+                     <a class="board-row" href="<%= request.getContextPath() %>/board/detail?id=<%= post.getPostId() %>">
+                         <div class="board-row-main">
+-                            <div class="title-line">
+-                                <strong><%= post.getTitle() %></strong>
+-                            </div>
++                            <div class="title-line"><strong><%= post.getTitle() %></strong></div>
+                             <p><%= post.getContent() %></p>
+                         </div>
+                         <div class="board-row-meta">
+@@ -48,8 +46,8 @@
+                } else { %>
+                     <div class="board-row">
+                         <div class="board-row-main">
+-                            <strong>검색 결과 0건</strong>
+-                            <p>검색어를 바꾸거나 다른 카테고리 키워드로 다시 시도해보세요.</p>
++                            <strong>검색 결과가 없습니다.</strong>
++                            <p>다른 검색어를 입력하거나 다른 게시판을 둘러보세요.</p>
+                         </div>
+                     </div>
+             <% } %>

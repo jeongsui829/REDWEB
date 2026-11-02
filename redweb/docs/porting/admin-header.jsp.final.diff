@@ -1,0 +1,19 @@
+--- baseline/src/main/webapp/WEB-INF/views/common/admin-header.jsp
++++ final/src/main/webapp/WEB-INF/views/common/admin-header.jsp
+@@ -1,10 +1,11 @@
+ <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+-<header class="admin-header">
+-    <div class="admin-header-inner">
++<header class="admin-topbar">
++    <div class="admin-brand">
++        <a class="brand-mark" href="${pageContext.request.contextPath}/admin/dashboard" aria-label="REDWEB 관리자 대시보드">REDWEB</a>
+         <div>
+-            <strong>RedWeb 관리자 콘솔</strong>
+-            <span>운영 현황과 회원, 게시글, 공지를 한 화면에서 관리합니다.</span>
++            <strong>REDWEB 관리자 콘솔</strong>
++            <span>회원, 게시글, 신고, 공지를 한 화면에서 관리합니다.</span>
+         </div>
+-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/home">서비스로 돌아가기</a>
+     </div>
++    <a class="btn btn-primary" href="${pageContext.request.contextPath}/home">서비스로 돌아가기</a>
+ </header>

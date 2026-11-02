@@ -1,0 +1,61 @@
+--- baseline/src/main/webapp/WEB-INF/views/board/detail.jsp
++++ final/src/main/webapp/WEB-INF/views/board/detail.jsp
+@@ -15,9 +15,10 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title><%= post != null ? post.getTitle() : "게시글 상세" %> | RedWeb</title>
++    <title><%= post != null ? post.getTitle() : "게시글 상세" %> | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/layout.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/components.css">
+@@ -55,11 +56,11 @@
+         <div class="detail-actions">
+             <form method="post" action="<%= request.getContextPath() %>/board/recommend">
+                 <input type="hidden" name="id" value="<%= post != null ? post.getPostId() : 101 %>">
+-                <button class="btn btn-primary" type="submit"><%= Boolean.TRUE.equals(recommended) ? "추천 완료" : "추천하기" %></button>
++                <button class="btn btn-primary" type="submit"><%= Boolean.TRUE.equals(recommended) ? "추천 완료" : "추천" %></button>
+             </form>
+             <form method="post" action="<%= request.getContextPath() %>/board/dislike">
+                 <input type="hidden" name="id" value="<%= post != null ? post.getPostId() : 101 %>">
+-                <button class="btn btn-secondary" type="submit"><%= Boolean.TRUE.equals(disliked) ? "비추천 완료" : "비추천하기" %></button>
++                <button class="btn btn-secondary" type="submit"><%= Boolean.TRUE.equals(disliked) ? "비추천 완료" : "비추천" %></button>
+             </form>
+             <% if (Boolean.TRUE.equals(canManagePost)) { %>
+                 <a class="btn btn-secondary" href="<%= request.getContextPath() %>/board/edit?id=<%= post != null ? post.getPostId() : 101 %>">수정</a>
+@@ -98,7 +99,7 @@
+                     <p><%= comment.getContent() %></p>
+                     <div class="comment-meta">
+                         <span><%= createdAt %> 작성</span>
+-                        <button type="button" class="reply-toggle" data-target="<%= replyFormId %>">답글쓰기</button>
++                        <button type="button" class="reply-toggle" data-target="<%= replyFormId %>">답글</button>
+                     </div>
+                     <form id="<%= replyFormId %>" class="stack-form reply-form" method="post" action="<%= request.getContextPath() %>/comment/add" hidden>
+                         <input type="hidden" name="postId" value="<%= post != null ? post.getPostId() : 101 %>">
+@@ -133,22 +134,6 @@
+     </section>
+ </main>
+ <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+-<script>
+-document.addEventListener("DOMContentLoaded", () => {
+-    document.querySelectorAll(".reply-toggle").forEach((button) => {
+-        button.addEventListener("click", () => {
+-            const form = document.getElementById(button.dataset.target);
+-            if (!form) {
+-                return;
+-            }
+-            form.hidden = !form.hidden;
+-            button.textContent = form.hidden ? "답글쓰기" : "답글 닫기";
+-            if (!form.hidden) {
+-                form.querySelector("textarea")?.focus();
+-            }
+-        });
+-    });
+-});
+-</script>
++<script src="<%= request.getContextPath() %>/assets/js/board-detail.js"></script>
+ </body>
+ </html>

@@ -1,0 +1,3 @@
+Database connected; user rows=13
+Post rows=20
+Configured sample login valid=false

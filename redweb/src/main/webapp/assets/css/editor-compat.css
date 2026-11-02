@@ -1,0 +1,19 @@
+/* Adapt the reference textarea appearance to the target's raw HTML edit surface.
+   Keep the original HTML output context and submitted content contract. */
+.stack-form .target-raw-editor {
+    width: 100%;
+    min-height: calc(16 * 1.7em + 28px);
+    padding: 13px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-subtle);
+    background: rgba(5, 6, 7, 0.78);
+    color: var(--text-main);
+    outline: none;
+    line-height: 1.7;
+    resize: vertical;
+    overflow: auto;
+}
+.stack-form .target-raw-editor:focus {
+    border-color: rgba(239, 43, 45, 0.75);
+    box-shadow: 0 0 0 3px rgba(239, 43, 45, 0.14);
+}

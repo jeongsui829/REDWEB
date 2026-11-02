@@ -1,0 +1,13 @@
+/opt/tomcat/logs/*.log /opt/tomcat/logs/*.txt /opt/tomcat/logs/catalina.out {
+    daily
+    maxsize 50M
+    rotate 14
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+    su tomcat tomcat
+}
+# Use distribution nginx logrotate with USR1 reopen, daily+maxsize and bounded retention.
+# copytruncate has a small loss window: audit rows remain in the DB, not these files.

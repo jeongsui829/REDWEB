@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context workDir="/srv/redweb/scratch/tomcat/scuredweb">
+    <!-- Set -Dredweb.maxActiveSessions to a measured positive cap before deployment. -->
+    <Manager className="org.apache.catalina.session.StandardManager" maxActiveSessions="${redweb.maxActiveSessions}" pathname="" />
+    <CookieProcessor sameSiteCookies="lax" />
+    <Resource name="jdbc/RedWebDB"
+              auth="Container"
+              type="javax.sql.DataSource"
+              factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
+              driverClassName="oracle.jdbc.OracleDriver"
+              url="jdbc:oracle:thin:@//127.0.0.1:1521/FREEPDB1"
+              username="redweb"
+              password="CHANGE_ME"
+              initialSize="1"
+              minIdle="1"
+              maxIdle="4"
+              maxTotal="8"
+              maxWaitMillis="10000"
+              validationQuery="SELECT 1 FROM DUAL"
+              validationQueryTimeout="5"
+              testOnBorrow="true" />
+</Context>

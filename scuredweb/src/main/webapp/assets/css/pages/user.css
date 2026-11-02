@@ -1,0 +1,143 @@
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.mypage-main {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.profile-summary {
+    display: grid;
+    grid-template-columns: 96px minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+}
+
+.profile-summary .avatar {
+    width: 96px;
+    height: 96px;
+}
+
+.profile-summary h1,
+.profile-summary h2,
+.profile-summary p {
+    overflow-wrap: anywhere;
+}
+
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.stat-grid .line-card {
+    min-width: 0;
+    margin-top: 0;
+    text-align: center;
+}
+
+.stat-grid .line-card strong {
+    color: var(--red-hot);
+    font-size: 24px;
+}
+
+.summary-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 110px;
+    text-align: center;
+}
+
+.summary-card strong {
+    color: var(--red-hot);
+    font-size: 28px;
+    line-height: 1;
+}
+
+.summary-card span {
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.line-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.profile-bio {
+    margin-top: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.profile-view-shell,
+.message-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 36px 0 56px;
+}
+
+.profile-view-card {
+    color: #fff;
+    background: linear-gradient(135deg, rgba(127, 17, 21, 0.72), rgba(10, 12, 18, 0.98));
+    border-color: var(--border-red);
+}
+
+.guestbook-list,
+.message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.guestbook-form {
+    margin-bottom: 20px;
+}
+
+.message-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.message-header-row .inline-actions,
+.line-card .inline-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.message-header-row .inline-actions form,
+.line-card .inline-actions form {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .summary-grid,
+    .stat-grid,
+    .profile-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-summary {
+        justify-items: start;
+    }
+
+    .message-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

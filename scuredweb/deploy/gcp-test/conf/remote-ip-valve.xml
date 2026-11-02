@@ -1,0 +1,10 @@
+<!-- Add inside the Tomcat <Host> that serves scuredweb. Nginx must connect from loopback only. -->
+<Valve className="org.apache.catalina.valves.RemoteIpValve"
+       internalProxies="127\.0\.0\.1|::1"
+       remoteIpHeader="x-forwarded-for"
+       protocolHeader="x-forwarded-proto"
+       protocolHeaderHttpsValue="https"
+       portHeader="x-forwarded-port" />
+
+<!-- Place inside Host, alongside RemoteIpValve. -->
+<Valve className="org.apache.catalina.valves.ErrorReportValve" showReport="false" showServerInfo="false" />

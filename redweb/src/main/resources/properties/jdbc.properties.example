@@ -1,0 +1,6 @@
+# Copy to jdbc.properties locally; never commit real credentials.
+db.driver=oracle.jdbc.OracleDriver
+db.url=jdbc:oracle:thin:@localhost:1521/XEPDB1
+db.username=redweb
+db.password=REPLACE_WITH_LOCAL_DB_PASSWORD
+

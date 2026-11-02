@@ -1,0 +1,1 @@
+<link rel="icon" href="<%= request.getContextPath() %>/assets/favicon.svg" type="image/svg+xml">

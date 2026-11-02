@@ -1,0 +1,17 @@
+[Unit]
+Description=Oracle Free after persistent volume
+Requires=docker.service
+After=docker.service network-online.target
+RequiresMountsFor=/srv/redweb/oracle
+Before=oracle-free-ready.service
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/mountpoint -q /srv/redweb/oracle
+ExecStartPre=/usr/local/sbin/check-oracle-container.sh
+ExecStart=/usr/bin/docker start --attach oracle-free
+ExecStop=/usr/bin/docker stop -t 120 oracle-free
+TimeoutStopSec=150
+Restart=on-failure
+RestartSec=10
+[Install]
+WantedBy=multi-user.target

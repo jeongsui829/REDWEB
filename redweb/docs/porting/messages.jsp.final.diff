@@ -1,0 +1,66 @@
+--- baseline/src/main/webapp/WEB-INF/views/user/messages.jsp
++++ final/src/main/webapp/WEB-INF/views/user/messages.jsp
+@@ -14,9 +14,10 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>쪽지함 | RedWeb</title>
++    <title>쪽지 | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/layout.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/components.css">
+@@ -27,19 +28,17 @@
+ <main class="container message-shell">
+     <% if (errorMessage != null) { %><div class="alert error"><%= errorMessage %></div><% } %>
+     <% if (flashMessage != null) { %><div class="alert success"><%= flashMessage %></div><% } %>
+-
+     <% if (Boolean.TRUE.equals(composeMode) && targetUser != null) { %>
+     <section class="section-card">
+-        <h2><%= targetUser.getNickname() %> 님에게 쪽지 보내기</h2>
++        <h2><%= targetUser.getNickname() %>님에게 쪽지 보내기</h2>
+         <form class="stack-form" method="post" action="<%= request.getContextPath() %>/messages/send">
+             <input type="hidden" name="receiver" value="<%= targetUser.getNickname() %>">
+-            <label>제목<input type="text" name="title" value="<%= replyTitle != null ? replyTitle : "" %>" placeholder="쪽지 제목을 입력하세요"></label>
+-            <label>내용<textarea name="content" rows="8" placeholder="전달할 내용을 입력하세요" required></textarea></label>
++            <label>제목<input type="text" name="title" value="<%= replyTitle != null ? replyTitle : "" %>" placeholder="쪽지 제목을 입력하세요."></label>
++            <label>내용<textarea name="content" rows="8" placeholder="전달할 내용을 입력하세요." required></textarea></label>
+             <button type="submit" class="btn btn-primary">쪽지 보내기</button>
+         </form>
+     </section>
+     <% } %>
+-
+     <section class="section-card">
+         <div class="message-header-row">
+             <h2>받은 쪽지</h2>
+@@ -49,7 +48,7 @@
+                         <button type="submit" class="btn btn-secondary">읽은 쪽지 정리</button>
+                     </form>
+                 <% } %>
+-                <a class="btn btn-secondary" href="<%= request.getContextPath() %>/mypage">마이페이지로</a>
++                <a class="btn btn-secondary" href="<%= request.getContextPath() %>/mypage">마이페이지</a>
+             </div>
+         </div>
+         <div class="message-list">
+@@ -60,7 +59,7 @@
+                         <span>보낸 사람: <%= message.getSenderNickname() %></span>
+                         <p><%= message.getContent() %></p>
+                         <div class="inline-actions">
+-                            <a class="btn btn-secondary" href="<%= request.getContextPath() %>/messages/compose?to=<%= java.net.URLEncoder.encode(message.getSenderNickname(), "UTF-8") %>&replyTitle=<%= java.net.URLEncoder.encode("RE: " + message.getTitle(), "UTF-8") %>">회신 보내기</a>
++                            <a class="btn btn-secondary" href="<%= request.getContextPath() %>/messages/compose?to=<%= java.net.URLEncoder.encode(message.getSenderNickname(), "UTF-8") %>&replyTitle=<%= java.net.URLEncoder.encode("RE: " + message.getTitle(), "UTF-8") %>">답장</a>
+                             <form method="post" action="<%= request.getContextPath() %>/messages/delete">
+                                 <input type="hidden" name="messageId" value="<%= message.getMessageId() %>">
+                                 <button type="submit" class="btn btn-secondary">삭제</button>
+@@ -69,9 +68,7 @@
+                     </div>
+             <%  }
+                } else { %>
+-                    <div class="line-card">
+-                        <strong>받은 쪽지가 없습니다.</strong>
+-                    </div>
++                    <div class="line-card"><strong>받은 쪽지가 없습니다.</strong></div>
+             <% } %>
+         </div>
+     </section>

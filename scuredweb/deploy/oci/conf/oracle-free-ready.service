@@ -1,0 +1,8 @@
+[Unit]
+Description=Oracle readiness gate
+Requires=oracle-free.service
+After=oracle-free.service
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/wait-oracle-free.sh
+TimeoutStartSec=310

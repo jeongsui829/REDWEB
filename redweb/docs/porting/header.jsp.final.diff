@@ -1,0 +1,110 @@
+--- baseline/src/main/webapp/WEB-INF/views/common/header.jsp
++++ final/src/main/webapp/WEB-INF/views/common/header.jsp
+@@ -16,84 +16,62 @@
+         data-admin="<%= isAdmin %>"
+         data-nickname="<%= loginUser != null && loginUser.getNickname() != null ? loginUser.getNickname() : "" %>">
+     <div class="container header-inner">
+-        <a class="brand brand-combined" href="<%= request.getContextPath() %>/home" aria-label="RedWeb 홈으로 이동">
+-            <span class="brand-lockup">RedWeb</span>
++        <a class="brand brand-combined" href="<%= request.getContextPath() %>/home" aria-label="REDWEB 홈">
++            <span class="brand-lockup">REDWEB</span>
+         </a>
+-        <nav class="main-nav">
+-            <details class="nav-dropdown">
+-                <summary>커뮤니티 <span class="nav-arrow">▾</span></summary>
+-                <div class="nav-dropdown-menu">
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=free">자유게시판</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=daily-log">Daily 공부 로그</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=ctf-qna">CTF 질문</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=project-share">Project 공유</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=qna">질문답변</a>
+-                </div>
+-            </details>
+-            <details class="nav-dropdown">
+-                <summary>정보공유 <span class="nav-arrow">▾</span></summary>
+-                <div class="nav-dropdown-menu">
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=owasp-top10">OWASP Top 10</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=security-news">보안뉴스</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=hacking-basic">해킹 기초 지식</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=linux-basic">Linux 기초</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=network-basic">Network</a>
+-                    <a href="<%= request.getContextPath() %>/board/list?boardCode=web-basic">Web 기초</a>
+-                </div>
+-            </details>
++
++        <nav class="main-nav" aria-label="주요 메뉴">
++            <a class="nav-single" href="<%= request.getContextPath() %>/board/list?boardCode=free">Forum</a>
++            <a class="nav-single" href="<%= request.getContextPath() %>/board/list?boardCode=owasp-top10">Research</a>
+             <a class="nav-single" href="<%= request.getContextPath() %>/board/list?boardCode=faq">FAQ</a>
+         </nav>
++
++        <form class="header-search-inline" action="<%= request.getContextPath() %>/search" method="get" role="search">
++            <span class="icon-search" aria-hidden="true"></span>
++            <input type="text" name="keyword" placeholder="검색..." aria-label="검색어">
++            <kbd aria-hidden="true">/</kbd>
++        </form>
++
+         <div class="header-tools">
+-            <div class="header-search-shell">
+-                <button type="button" class="icon-btn search-toggle" aria-label="검색 열기">
+-                    <span class="icon-search" aria-hidden="true"></span>
+-                </button>
+-                <form class="header-search header-search-popover" action="<%= request.getContextPath() %>/search" method="get">
+-                    <input type="text" name="keyword" placeholder="검색어를 입력하고 Enter를 눌러보세요">
+-                </form>
+-            </div>
+             <% if (loginUser != null) { %>
+                 <div class="header-bell-shell" data-read-url="<%= request.getContextPath() %>/notifications/read">
+-                    <button type="button" class="icon-btn bell-toggle" aria-label="알림 보기">
++                    <button type="button" class="icon-btn bell-toggle" aria-label="알림 열기" aria-expanded="false" aria-controls="headerNotificationDrawer">
+                         <span class="icon-bell" aria-hidden="true"></span>
+                         <% if (unreadNotificationCount > 0) { %>
+                             <span class="icon-badge"><%= notificationBadgeText %></span>
+                         <% } %>
+                     </button>
+-                    <div class="notification-drawer">
++                    <div class="notification-drawer" id="headerNotificationDrawer" aria-label="최근 알림">
+                         <div class="notification-drawer-header">
+                             <strong>알림</strong>
+-                            <a href="<%= request.getContextPath() %>/mypage/notifications">전체보기</a>
++                            <a href="<%= request.getContextPath() %>/mypage/notifications">전체 보기</a>
+                         </div>
+                         <div class="notification-drawer-list">
+                             <% if (!headerNotifications.isEmpty()) {
+-                                for (NotificationDTO notification : headerNotifications) { %>
++                                for (NotificationDTO notification : headerNotifications) {
++                            %>
+                                     <a class="notification-item" href="<%= request.getContextPath() + (notification.getTargetUrl() != null ? notification.getTargetUrl() : "/mypage/notifications") %>">
+                                         <strong><%= notification.getTitle() %></strong>
+                                         <span><%= notification.getMessage() %></span>
+                                     </a>
+                             <%  }
+                                } else { %>
+-                                    <div class="notification-empty">새로운 알림이 없습니다.</div>
++                                    <div class="notification-empty">새 알림이 없습니다.</div>
+                             <% } %>
+                         </div>
+                     </div>
+                 </div>
+-            <% } %>
+-        </div>
+-        <div class="header-actions">
+-            <% if (loginUser != null) { %>
+-                <span class="badge"><%= isAdmin ? "관리자" : "일반회원" %></span>
++                <span class="badge header-user-badge"><%= isAdmin ? "ADMIN" : "ME" %></span>
+                 <% if (isAdmin) { %>
+-                    <a class="text-link" href="<%= request.getContextPath() %>/admin/dashboard">관리자 페이지</a>
++                    <a class="text-link" href="<%= request.getContextPath() %>/admin/dashboard">관리자</a>
+                 <% } %>
+                 <a class="text-link message-link-shell" href="<%= request.getContextPath() %>/messages">
+-                    쪽지함
++                    쪽지
+                     <% if (unreadMessageCount > 0) { %>
+                         <span class="message-badge"><%= messageBadgeText %></span>
+                     <% } %>
+                 </a>
+-                <a class="text-link" href="<%= request.getContextPath() %>/mypage">마이페이지</a>
++                <a class="text-link" href="<%= request.getContextPath() %>/mypage">내 정보</a>
+                 <a class="btn btn-primary" href="<%= request.getContextPath() %>/logout">로그아웃</a>
+             <% } else { %>
+                 <a class="text-link" href="<%= request.getContextPath() %>/login">로그인</a>

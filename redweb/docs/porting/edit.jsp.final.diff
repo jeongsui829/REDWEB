@@ -1,0 +1,308 @@
+--- baseline/src/main/webapp/WEB-INF/views/board/edit.jsp
++++ final/src/main/webapp/WEB-INF/views/board/edit.jsp
+@@ -6,284 +6,42 @@
+ <!DOCTYPE html>
+ <html lang="ko">
+ <head>
+-    <meta charset="UTF-8">
++    <%@ include file="/WEB-INF/views/common/head.jspf" %>
++    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+-    <title>게시글 수정 | RedWeb</title>
++    <title>게시글 수정 | REDWEB</title>
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/common.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/layout.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/components.css">
+     <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/pages/board.css">
++    <link rel="stylesheet" href="<%= request.getContextPath() %>/assets/css/editor-compat.css">
+ </head>
+ <body>
+ <jsp:include page="/WEB-INF/views/common/header.jsp" />
+-<main class="container form-page">
++<main class="page-shell container board-write-shell">
+     <section class="section-card editor-card">
+-        <span class="eyebrow">콘텐츠 수정</span>
++        <span class="eyebrow">콘텐츠 편집기</span>
+         <h1>게시글 수정</h1>
+         <form id="postEditForm" class="stack-form" method="post" action="<%= request.getContextPath() %>/board/edit" enctype="multipart/form-data">
+             <input type="hidden" name="id" value="<%= post != null ? post.getPostId() : 101 %>">
+-            <label>제목<input type="text" name="title" value="<%= post != null ? post.getTitle() : "" %>" required></label>
+-
+-            <div class="editor-toolbar" aria-label="게시글 편집 도구">
+-                <button type="button" id="codeToolButton">소스코드</button>
+-                <button type="button" id="tableToolButton">표</button>
+-                <button type="button" id="formulaToolButton">수식</button>
+-                <button type="button" id="imageInsertButton">사진</button>
+-                <label class="toolbar-select">폰트
+-                    <select id="fontSizeSelect">
+-                        <option value="">기본</option>
+-                        <option value="14">14px</option>
+-                        <option value="16">16px</option>
+-                        <option value="18">18px</option>
+-                        <option value="22">22px</option>
+-                        <option value="28">28px</option>
+-                    </select>
+-                </label>
+-                <button type="button" id="colorToolButton">색상</button>
+-            </div>
+-
+-            <div id="colorPalette" class="color-palette" hidden>
+-                <button type="button" class="color-swatch is-empty" data-color=""></button>
+-                <button type="button" class="color-swatch" style="background:#111111" data-color="#111111"></button>
+-                <button type="button" class="color-swatch" style="background:#8b8b8b" data-color="#8b8b8b"></button>
+-                <button type="button" class="color-swatch" style="background:#ffd6d6" data-color="#ffd6d6"></button>
+-                <button type="button" class="color-swatch" style="background:#ffe4b5" data-color="#ffe4b5"></button>
+-                <button type="button" class="color-swatch" style="background:#fff3a3" data-color="#fff3a3"></button>
+-                <button type="button" class="color-swatch" style="background:#c8f7c5" data-color="#c8f7c5"></button>
+-                <button type="button" class="color-swatch" style="background:#b7f0e1" data-color="#b7f0e1"></button>
+-                <button type="button" class="color-swatch" style="background:#bde7ff" data-color="#bde7ff"></button>
+-                <button type="button" class="color-swatch" style="background:#d9ccff" data-color="#d9ccff"></button>
+-                <button type="button" class="color-swatch" style="background:#ff9fba" data-color="#ff9fba"></button>
+-                <button type="button" class="color-swatch" style="background:#ffffff" data-color="#ffffff"></button>
+-                <button type="button" class="color-swatch" style="background:#e53935" data-color="#e53935"></button>
+-                <button type="button" class="color-swatch" style="background:#ff9800" data-color="#ff9800"></button>
+-                <button type="button" class="color-swatch" style="background:#fdd835" data-color="#fdd835"></button>
+-                <button type="button" class="color-swatch" style="background:#43a047" data-color="#43a047"></button>
+-                <button type="button" class="color-swatch" style="background:#00acc1" data-color="#00acc1"></button>
+-                <button type="button" class="color-swatch" style="background:#1e88e5" data-color="#1e88e5"></button>
+-                <button type="button" class="color-swatch" style="background:#8e24aa" data-color="#8e24aa"></button>
+-                <button type="button" class="color-swatch" style="background:#d81b60" data-color="#d81b60"></button>
+-            </div>
+-
+-            <div id="codeComposer" class="code-composer" hidden>
+-                <div class="code-composer-head">
+-                    <strong>소스코드 작성</strong>
+-                    <button type="button" id="closeCodeComposer">닫기</button>
+-                </div>
+-                <input id="codeTitleInput" type="text" placeholder="예: Java 로그인 DAO">
+-                <textarea id="codeBlockInput" rows="14" spellcheck="false" placeholder="공유할 소스코드를 여기에 작성하세요."></textarea>
+-                <button type="button" class="btn btn-secondary" id="insertCodeBlock">본문에 삽입</button>
+-            </div>
+-
+-            <label>내용</label>
+-            <div id="richEditor" class="rich-editor" contenteditable="true"><%= post != null && post.getContent() != null ? post.getContent() : "" %></div>
+-            <textarea id="postContent" name="content" class="visually-hidden-file"></textarea>
+-
+-            <div id="imageDropZone" class="image-drop-zone">
+-                <strong>이미지를 드래그해서 본문에 추가</strong>
+-                <span>또는 상단의 사진 버튼을 눌러 삽입할 수 있습니다.</span>
+-            </div>
+-
+-            <input id="contentImagesInput" class="visually-hidden-file" type="file" name="contentImages" accept="image/*" multiple>
+-            <div id="contentImagePreview" class="image-preview-grid"></div>
+-
+-            <label>첨부파일<input type="file" name="attachments" multiple></label>
+-            <button type="submit" class="btn btn-primary">수정 저장</button>
++            <label>제목
++                <input type="text" name="title" value="<%= post != null ? post.getTitle() : "" %>" required>
++            </label>
++            <label>내용
++                <div id="richEditor" class="target-raw-editor" contenteditable="true" role="textbox" aria-multiline="true" tabindex="0"><%= post != null && post.getContent() != null ? post.getContent() : "" %></div>
++                <textarea id="postContent" name="content" hidden></textarea>
++            </label>
++            <label>본문 이미지
++                <input type="file" name="contentImages" accept="image/*" multiple>
++            </label>
++            <label>첨부파일
++                <input type="file" name="attachments" multiple>
++            </label>
++            <button type="submit" class="btn btn-primary">변경사항 저장</button>
+         </form>
+     </section>
+ </main>
+ <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+-<script>
+-document.addEventListener("DOMContentLoaded", () => {
+-    const form = document.getElementById("postEditForm");
+-    const editor = document.getElementById("richEditor");
+-    const hiddenContent = document.getElementById("postContent");
+-    const imageInput = document.getElementById("contentImagesInput");
+-    const imageButton = document.getElementById("imageInsertButton");
+-    const dropZone = document.getElementById("imageDropZone");
+-    const preview = document.getElementById("contentImagePreview");
+-    const fontSizeSelect = document.getElementById("fontSizeSelect");
+-    const colorButton = document.getElementById("colorToolButton");
+-    const colorPalette = document.getElementById("colorPalette");
+-    const codeComposer = document.getElementById("codeComposer");
+-    const codeTitleInput = document.getElementById("codeTitleInput");
+-    const codeBlockInput = document.getElementById("codeBlockInput");
+-    const selectedImages = [];
+-
+-    function focusEditor() {
+-        editor.focus();
+-    }
+-
+-    function insertHtml(html) {
+-        const template = document.createElement("template");
+-        template.innerHTML = html;
+-        insertNode(template.content);
+-    }
+-
+-    function insertNode(node) {
+-        focusEditor();
+-        const selection = window.getSelection();
+-        if (!selection || selection.rangeCount === 0 || !editor.contains(selection.anchorNode)) {
+-            editor.appendChild(node);
+-            return;
+-        }
+-        const range = selection.getRangeAt(0);
+-        range.deleteContents();
+-        range.insertNode(node);
+-        selection.removeAllRanges();
+-        const nextRange = document.createRange();
+-        nextRange.selectNodeContents(editor);
+-        nextRange.collapse(false);
+-        selection.addRange(nextRange);
+-    }
+-
+-    function escapeHtml(value) {
+-        return value
+-            .replaceAll("&", "&amp;")
+-            .replaceAll("<", "&lt;")
+-            .replaceAll(">", "&gt;")
+-            .replaceAll("\"", "&quot;");
+-    }
+-
+-    document.getElementById("codeToolButton").addEventListener("click", () => {
+-        codeComposer.hidden = !codeComposer.hidden;
+-        if (!codeComposer.hidden) {
+-            codeBlockInput.focus();
+-        }
+-    });
+-
+-    document.getElementById("closeCodeComposer").addEventListener("click", () => {
+-        codeComposer.hidden = true;
+-    });
+-
+-    document.getElementById("insertCodeBlock").addEventListener("click", () => {
+-        const title = codeTitleInput.value.trim();
+-        const code = codeBlockInput.value.trim();
+-        if (!code) {
+-            codeBlockInput.focus();
+-            return;
+-        }
+-        const titleHtml = title ? "<div class=\"code-title\">" + escapeHtml(title) + "</div>" : "";
+-        insertHtml("<div class=\"code-snippet\">" + titleHtml + "<pre class=\"code-block\"><code>" + escapeHtml(code) + "</code></pre></div><p><br></p>");
+-        codeTitleInput.value = "";
+-        codeBlockInput.value = "";
+-        codeComposer.hidden = true;
+-    });
+-
+-    document.getElementById("tableToolButton").addEventListener("click", () => {
+-        insertHtml("<table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>예시</td><td>값</td></tr></tbody></table><p><br></p>");
+-    });
+-
+-    document.getElementById("formulaToolButton").addEventListener("click", () => {
+-        insertHtml("<span class=\"formula\">E = mc^2</span>&nbsp;");
+-    });
+-
+-    fontSizeSelect.addEventListener("change", () => {
+-        if (!fontSizeSelect.value) {
+-            return;
+-        }
+-        focusEditor();
+-        document.execCommand("fontSize", false, "4");
+-        editor.querySelectorAll("font[size='4']").forEach((font) => {
+-            const span = document.createElement("span");
+-            span.style.fontSize = fontSizeSelect.value + "px";
+-            span.innerHTML = font.innerHTML;
+-            font.replaceWith(span);
+-        });
+-        fontSizeSelect.value = "";
+-    });
+-
+-    colorButton.addEventListener("click", () => {
+-        colorPalette.hidden = !colorPalette.hidden;
+-    });
+-
+-    colorPalette.querySelectorAll(".color-swatch").forEach((swatch) => {
+-        swatch.addEventListener("click", () => {
+-            const color = swatch.dataset.color;
+-            focusEditor();
+-            document.execCommand("foreColor", false, color || "#111111");
+-            colorPalette.hidden = true;
+-        });
+-    });
+-
+-    imageButton.addEventListener("click", () => imageInput.click());
+-
+-    function syncFileInput() {
+-        const dataTransfer = new DataTransfer();
+-        selectedImages.forEach((file) => dataTransfer.items.add(file));
+-        imageInput.files = dataTransfer.files;
+-    }
+-
+-    function addImageFiles(files) {
+-        const images = Array.from(files || []).filter((file) => file.type.startsWith("image/"));
+-        images.forEach((file) => {
+-            selectedImages.push(file);
+-            const reader = new FileReader();
+-            reader.onload = (event) => {
+-                const fragment = document.createDocumentFragment();
+-                const figure = document.createElement("figure");
+-                figure.className = "editor-image";
+-                figure.dataset.imageName = file.name;
+-
+-                const image = document.createElement("img");
+-                image.src = event.target.result;
+-                image.alt = file.name;
+-
+-                const caption = document.createElement("figcaption");
+-                caption.textContent = file.name;
+-
+-                const spacer = document.createElement("p");
+-                spacer.innerHTML = "<br>";
+-
+-                figure.appendChild(image);
+-                figure.appendChild(caption);
+-                fragment.appendChild(figure);
+-                fragment.appendChild(spacer);
+-                insertNode(fragment);
+-                renderPreview();
+-            };
+-            reader.readAsDataURL(file);
+-        });
+-        syncFileInput();
+-    }
+-
+-    function renderPreview() {
+-        preview.innerHTML = "";
+-        selectedImages.forEach((file) => {
+-            const item = document.createElement("span");
+-            item.textContent = file.name;
+-            preview.appendChild(item);
+-        });
+-    }
+-
+-    imageInput.addEventListener("change", () => addImageFiles(imageInput.files));
+-    ["dragenter", "dragover"].forEach((eventName) => {
+-        dropZone.addEventListener(eventName, (event) => {
+-            event.preventDefault();
+-            dropZone.classList.add("is-dragging");
+-        });
+-    });
+-    ["dragleave", "drop"].forEach((eventName) => {
+-        dropZone.addEventListener(eventName, (event) => {
+-            event.preventDefault();
+-            dropZone.classList.remove("is-dragging");
+-        });
+-    });
+-    dropZone.addEventListener("drop", (event) => addImageFiles(event.dataTransfer.files));
+-
+-    form.addEventListener("submit", (event) => {
+-        const clone = editor.cloneNode(true);
+-        clone.querySelectorAll(".editor-image").forEach((figure) => {
+-            const marker = document.createTextNode("[[image:" + figure.dataset.imageName + "]]");
+-            figure.replaceWith(marker);
+-        });
+-        hiddenContent.value = clone.innerHTML.trim();
+-        if (!hiddenContent.value) {
+-            event.preventDefault();
+-            editor.focus();
+-        }
+-    });
+-});
+-</script>
++<script src="<%= request.getContextPath() %>/assets/js/editor-compat.js"></script>
+ </body>
+ </html>
