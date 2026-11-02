@@ -1,0 +1,20 @@
+<group name="redweb,web_attack,">
+
+  <!-- REDWEB SQL Injection detection -->
+  <rule id="100110" level="8">
+    <if_sid>31106</if_sid>
+    <url type="pcre2">(?i)^/(?:redweb|scuredweb)/.*(?:union(?:%20|\+|\s)+select|ascii(?:%28|\()|substr(?:%28|\())</url>
+    <description>REDWEB: Suspected SQL Injection</description>
+    <group>sql_injection,redweb,</group>
+  </rule>
+
+  <!-- REDWEB XSS detection -->
+  <rule id="100111" level="8">
+    <if_sid>31106</if_sid>
+    <url type="pcre2">(?i)^/(?:redweb|scuredweb)/.*(?:%3cscript|%3csvg|%3cimg|onerror(?:%3d|=)|onload(?:%3d|=))</url>
+    <description>REDWEB: Suspected XSS</description>
+    <group>xss,redweb,</group>
+  </rule>
+
+</group>
+

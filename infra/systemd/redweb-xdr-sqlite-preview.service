@@ -1,0 +1,33 @@
+[Unit]
+Description=REDWEB XDR SQLite Correlator Preview (DRY-RUN)
+After=wazuh-manager.service
+RequiresMountsFor=/var/ossec/logs/alerts /var/lib/redweb-xdr
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/redweb-xdr
+
+RuntimeDirectory=redweb-xdr
+RuntimeDirectoryMode=0700
+
+ExecStart=/usr/bin/flock -n /run/redweb-xdr/sqlite-preview.lock /usr/bin/python3 -u /opt/redweb-xdr/sqlite_tracker.py --watch
+
+Restart=on-failure
+RestartSec=5
+UMask=0077
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ReadWritePaths=/var/lib/redweb-xdr
+ReadOnlyPaths=/var/ossec/logs/alerts
+RestrictAddressFamilies=AF_UNIX
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=redweb-xdr-sqlite-preview
+
+[Install]
+WantedBy=multi-user.target

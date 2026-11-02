@@ -1,0 +1,6 @@
+<decoder name="redweb-corr">
+  <program_name type="pcre2">^redweb-corr$</program_name>
+  <prematch type="pcre2">^REDWEB_CORR tier=</prematch>
+  <regex type="pcre2">^REDWEB_CORR tier=(TWO|THREE) srcip=((?:[0-9]{1,3}\.){3}[0-9]{1,3}) types=(AUTH\+SQLI\+XSS|AUTH\+SQLI|AUTH\+XSS|SQLI\+XSS)(?: event_id=([0-9a-f]{64}))?$</regex>
+  <order>corr_tier,srcip,corr_types,corr_event_id</order>
+</decoder>

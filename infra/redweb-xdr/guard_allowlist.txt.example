@@ -1,0 +1,4 @@
+# Replace locally with your management IP; no real addresses exported.
+127.0.0.1
+::1
+# 192.0.2.10/32

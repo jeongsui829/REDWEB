@@ -1,0 +1,11 @@
+[Unit]
+Description=Run REDWEB XDR Outbox dispatcher periodically
+
+[Timer]
+OnBootSec=30s
+OnUnitInactiveSec=15s
+AccuracySec=1s
+Unit=redweb-xdr-outbox-dispatch.service
+
+[Install]
+WantedBy=timers.target

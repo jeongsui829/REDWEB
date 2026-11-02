@@ -1,0 +1,19 @@
+databases:
+  default:
+    username: ${DB_USERNAME}
+    password: "REPLACE_LOCALLY"
+    url: ${DB_CONNECT_STRING}
+    queryTimeout: 5
+    maxOpenConns: 2
+    maxIdleConns: 1
+
+metrics:
+  default: /default-metrics.toml
+
+log:
+  level: info
+  disable: 1
+
+web:
+  listenAddresses:
+    - "127.0.0.1:9161"

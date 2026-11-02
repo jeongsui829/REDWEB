@@ -1,0 +1,19 @@
+[Unit]
+Description=REDWEB XDR Outbox journal dispatcher
+After=wazuh-manager.service redweb-xdr-sqlite-preview.service
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/opt/redweb-xdr
+Environment=REDWEB_XDR_LIVE_SEND=YES
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 /opt/redweb-xdr/outbox_dispatch.py --send-once
+TimeoutStartSec=60
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/redweb-xdr
+RestrictAddressFamilies=AF_UNIX

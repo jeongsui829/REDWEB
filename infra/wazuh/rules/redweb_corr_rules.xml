@@ -1,0 +1,19 @@
+<group name="redweb,xdr_correlated,">
+
+  <rule id="100130" level="9">
+    <decoded_as>redweb-corr</decoded_as>
+    <field name="corr_tier" type="pcre2">^TWO$</field>
+    <field name="corr_types" type="pcre2">^(AUTH\+SQLI|AUTH\+XSS|SQLI\+XSS)$</field>
+    <description>REDWEB XDR: Multi-vector attack $(corr_types) from $(srcip)</description>
+    <group>multi_vector,</group>
+  </rule>
+
+  <rule id="100131" level="12">
+    <decoded_as>redweb-corr</decoded_as>
+    <field name="corr_tier" type="pcre2">^THREE$</field>
+    <field name="corr_types" type="pcre2">^AUTH\+SQLI\+XSS$</field>
+    <description>REDWEB XDR: High-risk multi-vector attack $(corr_types) from $(srcip)</description>
+    <group>multi_vector,high_risk,</group>
+  </rule>
+
+</group>

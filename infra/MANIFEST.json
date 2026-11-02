@@ -1,0 +1,248 @@
+{
+  "format_version": 1,
+  "created_at_utc": "2026-11-02T07:42:31.572066+00:00",
+  "status": "REVIEW_REQUIRED_NOT_PUBLICLY_UPLOADED",
+  "included": [
+    {
+      "source": "/opt/redweb-xdr/correlator.py",
+      "path": "infra/redweb-xdr/correlator.py",
+      "redacted": false,
+      "bytes": 4595,
+      "sha256": "d1dfa8c15585e2e478599e39e5bd5e1951f3f62caa527e1b8ba2211c1be1a0e0"
+    },
+    {
+      "source": "/opt/redweb-xdr/guard_mode.py",
+      "path": "infra/redweb-xdr/guard_mode.py",
+      "redacted": false,
+      "bytes": 4395,
+      "sha256": "d1372915266386dcb32019800e2cc7159738b5fab1aa0c42e6939fa5aa51ddf0"
+    },
+    {
+      "source": "/opt/redweb-xdr/journal_transport.py",
+      "path": "infra/redweb-xdr/journal_transport.py",
+      "redacted": false,
+      "bytes": 3966,
+      "sha256": "8c0ce14fd59ad5e5446692ebf474792eea48e794de5ff33937175742d9d07e18"
+    },
+    {
+      "source": "/opt/redweb-xdr/live_correlator.py",
+      "path": "infra/redweb-xdr/live_correlator.py",
+      "redacted": false,
+      "bytes": 8566,
+      "sha256": "3132cf3a60d8e9a7b440d73ecdbfff44fd952a17d5908473d02d9529a6af030b"
+    },
+    {
+      "source": "/opt/redweb-xdr/outbox.py",
+      "path": "infra/redweb-xdr/outbox.py",
+      "redacted": false,
+      "bytes": 5587,
+      "sha256": "b9ea7752c1db86e2ba6246d92e044f1af3aafba8085873453bae9f509927741b"
+    },
+    {
+      "source": "/opt/redweb-xdr/outbox_dispatch.py",
+      "path": "infra/redweb-xdr/outbox_dispatch.py",
+      "redacted": false,
+      "bytes": 3752,
+      "sha256": "d0e6b89bd43bf4d78d636b6c4ced2e57df4dadc08b2b89c415ff2fb9c814a093"
+    },
+    {
+      "source": "/opt/redweb-xdr/outbox_sender.py",
+      "path": "infra/redweb-xdr/outbox_sender.py",
+      "redacted": false,
+      "bytes": 5495,
+      "sha256": "1797139e8df83e103aeb2bd1f4587949bfbd6ec22b9ffdacb093777015aefacc"
+    },
+    {
+      "source": "/opt/redweb-xdr/safe_sender.py",
+      "path": "infra/redweb-xdr/safe_sender.py",
+      "redacted": false,
+      "bytes": 6973,
+      "sha256": "006e3ca7f1cb9d05b020cfa532dcc8b9f796cb33407ad084e750a5a28b3ea0dc"
+    },
+    {
+      "source": "/opt/redweb-xdr/single_dispatch.py",
+      "path": "infra/redweb-xdr/single_dispatch.py",
+      "redacted": false,
+      "bytes": 6275,
+      "sha256": "667bc05e99a4d0f91b7449792ec5afa11638debef170e9723d3fd87da503da21"
+    },
+    {
+      "source": "/opt/redweb-xdr/sqlite_tracker.py",
+      "path": "infra/redweb-xdr/sqlite_tracker.py",
+      "redacted": false,
+      "bytes": 6603,
+      "sha256": "a7d462e4c31c7a439b22764bb8f0accd5e789794256d41bcdc074935a056bfef"
+    },
+    {
+      "source": "/usr/local/sbin/redweb-wazuh-pid-check.py",
+      "path": "infra/helpers/redweb-wazuh-pid-check.py",
+      "redacted": false,
+      "bytes": 1990,
+      "sha256": "4081a6c0e5d3f836d9fc84cc895c8e43efffa6083230b0be0a266fe303b667f2"
+    },
+    {
+      "source": "/etc/systemd/system/redweb-xdr-firewall-base.service",
+      "path": "infra/systemd/redweb-xdr-firewall-base.service",
+      "redacted": false,
+      "bytes": 254,
+      "sha256": "c59024996fff298f651f164fc0c3d3196bdbb8518d82d46f1af47fcad9e6bcda"
+    },
+    {
+      "source": "/etc/systemd/system/redweb-xdr-outbox-dispatch.service",
+      "path": "infra/systemd/redweb-xdr-outbox-dispatch.service",
+      "redacted": false,
+      "bytes": 506,
+      "sha256": "b0c9322f7ad8967e9a5bb8a3efc494ec7f098ea94312bda87d7913f6209a1410"
+    },
+    {
+      "source": "/etc/systemd/system/redweb-xdr-outbox-dispatch.timer",
+      "path": "infra/systemd/redweb-xdr-outbox-dispatch.timer",
+      "redacted": false,
+      "bytes": 199,
+      "sha256": "3ec1ceb1039ea7f62dcea55727cf13e4c2c38bb0c26fa1d085a7ea8755a3e1dc"
+    },
+    {
+      "source": "/etc/systemd/system/redweb-xdr-preview.service",
+      "path": "infra/systemd/redweb-xdr-preview.service",
+      "redacted": false,
+      "bytes": 546,
+      "sha256": "638605d5b8c6953b35269ac989ed23304afc33b0e505f2a24348e86dd50b5977"
+    },
+    {
+      "source": "/etc/systemd/system/redweb-xdr-sqlite-preview.service",
+      "path": "infra/systemd/redweb-xdr-sqlite-preview.service",
+      "redacted": false,
+      "bytes": 751,
+      "sha256": "5ba3639cc705c0f1421d41801f9d000d46419dc7b9f9bcef128645747c489abb"
+    },
+    {
+      "source": "/etc/systemd/system/wazuh-manager.service.d/20-redweb-pid-check.conf",
+      "path": "infra/systemd/wazuh-manager.service.d/20-redweb-pid-check.conf",
+      "redacted": false,
+      "bytes": 90,
+      "sha256": "7a2c5f5f3fb8128c7fd34d3238008fc38df7416c45606e53e8c3b88040f921a9"
+    },
+    {
+      "source": "/var/ossec/etc/rules/redweb_auth_rules.xml",
+      "path": "infra/wazuh/rules/redweb_auth_rules.xml",
+      "redacted": false,
+      "bytes": 938,
+      "sha256": "a0a28e48397c3f3f33e9d585420de8f6d737397014292a3e01238f859de3a778"
+    },
+    {
+      "source": "/var/ossec/etc/rules/redweb_corr_rules.xml",
+      "path": "infra/wazuh/rules/redweb_corr_rules.xml",
+      "redacted": false,
+      "bytes": 748,
+      "sha256": "aa8262a94c90fb27494d1b9d90c801ff08aa9a8e1374228d27146bca1221b8bf"
+    },
+    {
+      "source": "/var/ossec/etc/rules/redweb_rules.xml",
+      "path": "infra/wazuh/rules/redweb_rules.xml",
+      "redacted": false,
+      "bytes": 683,
+      "sha256": "e5fd9b58b0ec44a64cf75e5675c51d734e20abc239abca7ec5aa257e7fb521b4"
+    },
+    {
+      "source": "/var/ossec/etc/rules/zz_redweb_guard_rules.xml",
+      "path": "infra/wazuh/rules/zz_redweb_guard_rules.xml",
+      "redacted": false,
+      "bytes": 338,
+      "sha256": "4c9e77d10c12c3469cdd00f1c6c8c77e5ed54cf72ec5db699526e1f7c0e0bf99"
+    },
+    {
+      "source": "/var/ossec/etc/decoders/redweb_auth_decoder.xml",
+      "path": "infra/wazuh/decoders/redweb_auth_decoder.xml",
+      "redacted": false,
+      "bytes": 362,
+      "sha256": "d3126bc2e92ca6e3437351dc6823295ad33a01d80a5ee531af12a250da54e4c0"
+    },
+    {
+      "source": "/var/ossec/etc/decoders/redweb_corr_decoder.xml",
+      "path": "infra/wazuh/decoders/redweb_corr_decoder.xml",
+      "redacted": false,
+      "bytes": 394,
+      "sha256": "52a7ef7dc335ab61817109b94cc7f78ad7dbf23ded1b38d6d626afe826314437"
+    },
+    {
+      "source": "/var/ossec/etc/ossec.conf",
+      "path": "infra/wazuh/ossec.conf.example",
+      "redacted": true,
+      "bytes": 10109,
+      "sha256": "cdc0d85aa10161a15cba5a73a6a6beebafdf12849566ebc61e0095bc66851583"
+    },
+    {
+      "source": "/var/ossec/etc/local_internal_options.conf",
+      "path": "infra/wazuh/local_internal_options.conf",
+      "redacted": false,
+      "bytes": 354,
+      "sha256": "3e9121d2fc5868af3b1fc6ecf55f3f6b5c4fb1808ccca259f5b99672844fbf33"
+    },
+    {
+      "source": "/opt/monitoring/docker-compose.yml",
+      "path": "infra/monitoring/docker-compose.yml.example",
+      "redacted": true,
+      "bytes": 3195,
+      "sha256": "fb3a5b993b1e36b6aadb2c03c8a70bba709ed5a5b17bca336ec71988d2908c79"
+    },
+    {
+      "source": "/opt/monitoring/alloy/config.alloy",
+      "path": "infra/monitoring/alloy/config.alloy",
+      "redacted": false,
+      "bytes": 1392,
+      "sha256": "e65c1cd48657454b9ebbbaefc194fe6f73ab4e9eca6278949ede01f9ae3b5b33"
+    },
+    {
+      "source": "/opt/monitoring/blackbox/blackbox.yml",
+      "path": "infra/monitoring/blackbox/blackbox.yml",
+      "redacted": false,
+      "bytes": 177,
+      "sha256": "a7125e0d10063250db8d4cafacdbe3e611a17537e412cc2c70214e91d0939e82"
+    },
+    {
+      "source": "/opt/monitoring/grafana/provisioning/datasources/prometheus.yml",
+      "path": "infra/monitoring/grafana/provisioning/datasources/prometheus.yml",
+      "redacted": false,
+      "bytes": 158,
+      "sha256": "ac8952a99ae4eb6f7d3df01a080b6e0ce026e509d3cc0e4e0f6559d329c42998"
+    },
+    {
+      "source": "/opt/monitoring/jmx/tomcat.yml",
+      "path": "infra/monitoring/jmx/tomcat.yml",
+      "redacted": false,
+      "bytes": 548,
+      "sha256": "68de494866f92fdb56b06f58425f2dfe62c3afb4eef0de180b789afc72341738"
+    },
+    {
+      "source": "/opt/monitoring/loki/loki.yml",
+      "path": "infra/monitoring/loki/loki.yml",
+      "redacted": false,
+      "bytes": 749,
+      "sha256": "dd7d484cca01f1937abbb5496c357775749c02c5aaffa102451d6e1b0efa9556"
+    },
+    {
+      "source": "/opt/monitoring/oracle-exporter/exporter.yml",
+      "path": "infra/monitoring/oracle-exporter/exporter.yml.example",
+      "redacted": true,
+      "bytes": 297,
+      "sha256": "fe03528dd1058dfb2e9109c39d336a75e84ea418c6636ac2bce04e5ba5cc2482"
+    },
+    {
+      "source": "/opt/monitoring/prometheus/prometheus.yml",
+      "path": "infra/monitoring/prometheus/prometheus.yml",
+      "redacted": false,
+      "bytes": 1616,
+      "sha256": "14c2e58b40096cfee59674c6473f5cfbdbc60ab956dd4c001fb44fda259041b5"
+    }
+  ],
+  "skipped": [],
+  "not_collected": [
+    ".env values",
+    "SQLite databases and state",
+    "logs and alert history",
+    "Docker data volumes",
+    "real guard allowlist",
+    "keys/certificates",
+    "live Grafana API exports not present in provisioning files"
+  ]
+}

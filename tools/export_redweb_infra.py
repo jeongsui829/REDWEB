@@ -176,6 +176,16 @@ def discover(monitor=Path('/opt/monitoring')):
         path = Path('/var/ossec/etc') / filename
         if path.is_file():
             items.append((path, 'wazuh/' + filename))
+    # Referenced by the firewall base unit and Wazuh's custom response command.
+    # They are outside /opt/redweb-xdr and were missing from the first export.
+    for source, destination in (
+        ('/usr/local/sbin/redweb-xdr-firewall-base', 'helpers/redweb-xdr-firewall-base'),
+        ('/var/ossec/active-response/bin/redweb-web-guard.py',
+         'wazuh/active-response/redweb-web-guard.py'),
+    ):
+        path = Path(source)
+        if path.is_file():
+            items.append((path, destination))
     if monitor.is_dir() and not monitor.is_symlink():
         for current, dirs, names in os.walk(monitor, followlinks=False):
             parent = Path(current)
@@ -245,9 +255,14 @@ def collect(destination):
             archive.writestr('infra/redweb-xdr/guard_allowlist.txt.example',
                              '# Replace locally with your management IP; no real addresses exported.\n'
                              '127.0.0.1\n::1\n# 192.0.2.10/32\n')
+            collected_sources = {i['source'] for i in included}
+            missing = [p for p in (
+                '/usr/local/sbin/redweb-xdr-firewall-base',
+                '/var/ossec/active-response/bin/redweb-web-guard.py',
+            ) if p not in collected_sources]
             manifest = {'format_version': 1, 'created_at_utc': datetime.now(timezone.utc).isoformat(),
                         'status': 'REVIEW_REQUIRED_NOT_PUBLICLY_UPLOADED',
-                        'included': included, 'skipped': skipped,
+                        'included': included, 'skipped': skipped, 'required_sources_missing': missing,
                         'not_collected': ['.env values', 'SQLite databases and state', 'logs and alert history',
                                           'Docker data volumes', 'real guard allowlist', 'keys/certificates',
                                           'live Grafana API exports not present in provisioning files']}
@@ -270,6 +285,7 @@ def collect(destination):
             raise RuntimeError('ZIP integrity check failed')
     return {'zip': str(destination.resolve()), 'collected_files': len(included),
             'redacted_files': sum(i['redacted'] for i in included), 'skipped_files': len(skipped),
+            'required_sources_missing': missing,
             'zip_integrity': 'PASS', 'public_upload': 'NOT_PERFORMED'}
 
 

@@ -1,0 +1,20 @@
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+
+includeObjectNames:
+  - 'Catalina:type=GlobalRequestProcessor,*'
+  - 'Catalina:type=ThreadPool,*'
+
+rules:
+  - pattern: 'Catalina<type=GlobalRequestProcessor, name="([^"]+)"><>(requestCount|errorCount|processingTime):'
+    name: tomcat_$2_total
+    labels:
+      connector: "$1"
+    type: COUNTER
+
+  - pattern: 'Catalina<type=ThreadPool, name="([^"]+)"><>(currentThreadCount|currentThreadsBusy|maxThreads):'
+    name: tomcat_threadpool_$2
+    labels:
+      connector: "$1"
+    type: GAUGE
+

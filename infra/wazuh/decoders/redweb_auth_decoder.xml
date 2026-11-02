@@ -1,0 +1,6 @@
+<decoder name="redweb-auth">
+  <program_name type="pcre2">^catalina\.sh$</program_name>
+  <prematch type="pcre2">com\.scuredweb\.auth\.controller\.AuthController\.handleLogin REDWEB_AUTH_</prematch>
+  <regex type="pcre2">REDWEB_AUTH_(FAILURE|BLOCKED) app=(scuredweb) srcip=((?:[0-9]{1,3}\.){3}[0-9]{1,3})</regex>
+  <order>auth_event,app,srcip</order>
+</decoder>

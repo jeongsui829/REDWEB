@@ -1,0 +1,12 @@
+[Unit]
+Description=REDWEB XDR nftables Firewall Base
+After=local-fs.target nftables.service
+Before=wazuh-manager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/sbin/redweb-xdr-firewall-base
+
+[Install]
+WantedBy=multi-user.target

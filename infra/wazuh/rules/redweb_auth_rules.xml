@@ -1,0 +1,27 @@
+<group name="redweb,authentication,">
+
+  <rule id="100120" level="3">
+    <decoded_as>redweb-auth</decoded_as>
+    <field name="auth_event" type="pcre2">^FAILURE$</field>
+    <description>REDWEB: SecuredWeb login failure from $(srcip)</description>
+    <group>authentication_failed,</group>
+  </rule>
+
+  <rule id="100121" level="10" frequency="5" timeframe="600">
+    <if_matched_sid>100120</if_matched_sid>
+    <same_srcip />
+    <description>REDWEB: Possible brute force from $(srcip) - 5 login failures within 10 minutes</description>
+    <mitre>
+      <id>T1110</id>
+    </mitre>
+    <group>brute_force,authentication_failures,</group>
+  </rule>
+
+  <rule id="100122" level="7">
+    <decoded_as>redweb-auth</decoded_as>
+    <field name="auth_event" type="pcre2">^BLOCKED$</field>
+    <description>REDWEB: SecuredWeb login attempt blocked from $(srcip)</description>
+    <group>authentication,access_denied,</group>
+  </rule>
+
+</group>

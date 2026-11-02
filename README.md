@@ -10,6 +10,8 @@ Java/JSP 기반 웹 취약점 분석과 시큐어코딩 비교를 위한 졸업�
 ```text
 redweb/       취약 버전: Java, JSP, 정적 자원, Oracle SQL, 문서
 scuredweb/    보안 강화 버전: 애플리케이션, 테스트, 배포 예제, 문서
+infra/       VPS 관제 코드·설정 및 복원 범위 문서
+tools/       관제 설정 수집 도구
 docs/        원본 ZIP 정리 기준과 GitHub 저장 내역
 ```
 
@@ -55,6 +57,7 @@ SCUREDWEB의 Oracle JDBC 드라이버는 `provided` 범위이므로 Tomcat 환�
 
 ## 관제 시스템과의 관계
 
-프로젝트 전체에는 Wazuh·Loki·Grafana 기반 보안 관제와 Python 상관분석·자동 대응 기능이 포함됩니다. **이번 ZIP에서 가져온 이 저장소는 웹 애플리케이션 소스 중심**이며, VPS의 현재 Wazuh 규칙·관제 서비스·방화벽 스크립트가 모두 포함된 백업은 아닙니다.
+프로젝트 전체에는 Wazuh·Loki·Grafana 기반 보안 관제와 Python 상관분석·자동 대응 기능이 포함됩니다. VPS에서 수집·검토한 관제 코드와 설정은 [`infra/`](infra/README.md)에 추가했습니다. 방화벽 초기화·자동 대응 실행 파일 및 Grafana DB 설정 등 [추가 수집 항목](infra/MISSING_COMPONENTS.md)이 있어 완전한 서버 복구 백업과는 구분됩니다.
 
 배포·점검 문서는 작성 당시 환경의 기록입니다. 이 최초 소스 저장 작업에서 애플리케이션 실행이나 DB 통합 테스트를 새로 수행하지는 않았습니다.
+
